@@ -32,5 +32,5 @@ Adds conversion-focused enhancements for blog listing and single article pages.
 - Social profile links are global and appear for each post listing item.
 - Plugin targets posts on blog-like listings (home, archive, search) and single post pages.
 - Main logic is split into modular files under `/includes/`.
-- To enable updates, replace `your-owner/blog-design-enhancer` and optionally set `BDE_GITHUB_TOKEN` in `blog-design-enhancer.php`.
-- GitHub commit-based updates should be implemented through automated releases in GitHub Actions; the updater is already ready for release ZIPs.
+- Updates pull from the public GitHub repository `aronmeszaros/blog-design-enhancer`.
+- GitHub commit-based updates are implemented through automated releases in GitHub Actions; the updater is ready for release ZIPs.

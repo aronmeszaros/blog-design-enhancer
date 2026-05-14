@@ -106,10 +106,6 @@ class BDE_Updater
             ],
         ];
 
-        if (defined('BDE_GITHUB_TOKEN') && BDE_GITHUB_TOKEN !== '') {
-            $args['headers']['Authorization'] = 'Bearer ' . BDE_GITHUB_TOKEN;
-        }
-
         $response = wp_remote_get($this->api_url, $args);
         if (is_wp_error($response)) {
             return null;
@@ -127,10 +123,29 @@ class BDE_Updater
         }
 
         $version = ltrim((string) $data['tag_name'], 'vV');
+        $package_url = (string) $data['zipball_url'];
+
+        if (!empty($data['assets']) && is_array($data['assets'])) {
+            foreach ($data['assets'] as $asset) {
+                if (!is_array($asset) || empty($asset['browser_download_url'])) {
+                    continue;
+                }
+
+                $asset_url = (string) $asset['browser_download_url'];
+                if (substr($asset_url, -4) !== '.zip') {
+                    continue;
+                }
+
+                // Prefer a deterministic ZIP asset for plugin updates.
+                $package_url = $asset_url;
+                break;
+            }
+        }
+
         $release = [
             'version' => $version,
             'html_url' => isset($data['html_url']) ? (string) $data['html_url'] : '',
-            'zipball_url' => (string) $data['zipball_url'],
+            'zipball_url' => $package_url,
             'body' => isset($data['body']) ? (string) $data['body'] : '',
             'published_at' => isset($data['published_at']) ? (string) $data['published_at'] : '',
         ];

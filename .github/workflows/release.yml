@@ -1,0 +1,65 @@
+name: Release Plugin ZIP
+
+# Triggers only when you push a version tag like v1.4.0
+# This is what drives the WordPress update check in class-bde-updater.php
+on:
+  push:
+    tags:
+      - 'v[0-9]*'
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Check out the repository at the pushed tag
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Extract the version number from the tag (strips the leading 'v')
+      #    e.g. tag 'v1.4.0' → VERSION='1.4.0'
+      - name: Extract version from tag
+        id: version
+        run: echo "VERSION=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+
+      # 3. Build the plugin ZIP.
+      #    The folder inside the ZIP MUST be named 'blog-design-enhancer' so
+      #    WordPress places the files in the correct wp-content/plugins sub-folder
+      #    after the auto-update. GitHub's auto-generated zipball uses a hash-
+      #    suffixed name and would break the plugin path, which is why we build
+      #    our own here.
+      #
+      #    Excluded from the ZIP:
+      #      - .github/         (CI config, not needed on the server)
+      #      - *.html           (local development/test files)
+      #      - .git/            (version control internals)
+      - name: Build plugin ZIP
+        run: |
+          mkdir -p /tmp/plugin/blog-design-enhancer
+
+          # Copy everything except CI, git, and local dev files
+          rsync -a \
+            --exclude='.github' \
+            --exclude='.git' \
+            --exclude='*.html' \
+            . /tmp/plugin/blog-design-enhancer/
+
+          cd /tmp/plugin
+          zip -r "blog-design-enhancer-${{ steps.version.outputs.VERSION }}.zip" blog-design-enhancer/
+
+      # 4. Create a GitHub Release for the tag and upload the ZIP as a release
+      #    asset. class-bde-updater.php checks 'assets' first and uses the .zip
+      #    it finds here. WordPress then downloads this exact file during update.
+      - name: Create GitHub Release and upload ZIP
+        uses: softprops/action-gh-release@v2
+        with:
+          # Release title shown on the GitHub Releases page
+          name: "Version ${{ steps.version.outputs.VERSION }}"
+          # Mark as draft if you want to review before publishing;
+          # set to false to publish immediately on tag push
+          draft: false
+          prerelease: false
+          files: /tmp/plugin/blog-design-enhancer-${{ steps.version.outputs.VERSION }}.zip
+        env:
+          # GITHUB_TOKEN is automatically provided by Actions — no setup needed
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
