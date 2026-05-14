@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Plugin-wide constants used by all modular classes.
-define('BDE_VERSION', '1.3.0');
+define('BDE_VERSION', '1.4.0');
 define('BDE_PLUGIN_FILE', __FILE__);
 define('BDE_PLUGIN_PATH', plugin_dir_path(__FILE__));
 define('BDE_PLUGIN_URL', plugin_dir_url(__FILE__));
