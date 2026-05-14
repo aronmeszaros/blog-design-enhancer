@@ -1,0 +1,434 @@
+/* Visual tokens used across archive and single templates. */
+:root {
+    --bde-text: #153466;
+    --bde-body: #2c3c56;
+    --bde-muted: #6d7b95;
+    --bde-surface: #f4f7fc;
+    --bde-border: #d8e1ef;
+    --bde-brand-a: #2468d6;
+    --bde-brand-b: #f06e38;
+    --bde-accent: #ff7a21;
+}
+
+/* Archive card layout and listing styles. */
+body.archive .site-main,
+body.single-post .site-main {
+    color: var(--bde-body);
+}
+
+body.archive .page-content {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+body.archive .page-content article.post {
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+    border: 1px solid var(--bde-border);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 12px 32px rgba(12, 49, 107, 0.06);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+body.archive .page-content article.post > a {
+    order: 1;
+}
+
+body.archive .page-content article.post .entry-title {
+    order: 2;
+}
+
+body.archive .page-content article.post > p {
+    order: 3;
+}
+
+body.archive .page-content article.post .bde-social-icons {
+    order: 4;
+}
+
+body.archive .page-content article.post:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px rgba(12, 49, 107, 0.12);
+}
+
+body.archive .page-content article.post > a {
+    display: block;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: #e6edf8;
+}
+
+body.archive .page-content article.post > a img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+body.archive .page-content article.post .entry-title {
+    margin: 0;
+    padding: 0.9rem 1rem 0.35rem;
+    font-size: 1.1rem;
+    line-height: 1.35;
+}
+
+body.archive .page-content article.post .entry-title a {
+    color: var(--bde-text);
+    text-decoration: none;
+    font-size: 1.22rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+body.archive .page-content article.post p {
+    padding: 0 1rem;
+    margin: 0.2rem 0 0.85rem;
+    color: var(--bde-body);
+    line-height: 1.58;
+    font-size: 1.03rem;
+}
+
+body.archive .page-content article.post .bde-social-icons {
+    margin: auto 1rem 1rem;
+    padding-top: 0.8rem;
+    border-top: 1px solid var(--bde-border);
+}
+
+body.archive .page-header {
+    margin-bottom: 1.25rem;
+}
+
+body.archive .page-header .entry-title {
+    margin: 0;
+    color: #1c3f72;
+    font-size: clamp(2rem, 5vw, 3.35rem);
+    line-height: 1.12;
+    letter-spacing: -0.015em;
+}
+
+body.archive .page-header .entry-title span {
+    color: #1c3f72;
+}
+
+body.archive .archive-description {
+    margin: 0.55rem 0 0;
+    color: #2c4b76;
+    font-size: 1.2rem;
+    line-height: 1.45;
+}
+
+body.archive .archive-description p {
+    margin: 0;
+}
+
+body.archive .bde-inline-breadcrumb {
+    margin: 0 0 0.6rem;
+    font-size: 1.06rem;
+    color: #4b6690;
+}
+
+body.archive .bde-inline-breadcrumb a {
+    color: #3f6cb1;
+    text-decoration: none;
+}
+
+/* Shared social profile buttons on archive cards. */
+.bde-social-icons {
+    display: flex;
+    gap: 0.55rem;
+    align-items: center;
+}
+
+.bde-social-link {
+    width: 32px;
+    height: 32px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.bde-social-link:hover,
+.bde-social-link:focus-visible {
+    transform: translateY(-1px);
+    opacity: 0.9;
+}
+
+.bde-social-link--facebook {
+    background: #e8f0ff;
+    color: #174399;
+}
+
+.bde-social-link--x {
+    background: #eef0f4;
+    color: #111111;
+}
+
+.bde-social-link--linkedin {
+    background: #e4f4ff;
+    color: #0f5883;
+}
+
+/* Single article readability and content hierarchy. */
+body.single-post .page-content {
+    max-width: 840px;
+}
+
+.bde-featured-image {
+    margin: 0 0 1.1rem;
+}
+
+.bde-featured-image__img {
+    width: 100%;
+    max-height: 520px;
+    object-fit: cover;
+    border-radius: 18px;
+    display: block;
+}
+
+body.single-post .page-content > p,
+body.single-post .page-content li {
+    color: var(--bde-body);
+    line-height: 1.78;
+    font-size: 1.08rem;
+}
+
+body.single-post .page-content a {
+    color: #1f56aa;
+}
+
+body.single-post .page-content h2,
+body.single-post .page-content h3 {
+    color: #153973;
+    line-height: 1.35;
+    margin-top: 2rem;
+}
+
+body.single-post .page-content h3 {
+    font-size: 1.45rem;
+}
+
+body.single-post .page-header .entry-title {
+    color: #113468;
+    line-height: 1.2;
+}
+
+body.single-post .page-content > p:first-of-type {
+    color: var(--bde-muted);
+    font-weight: 600;
+}
+
+body.single-post .page-content img {
+    max-height: 520px;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 18px;
+}
+
+/* Breadcrumb and table-of-contents modules. */
+.bde-breadcrumb {
+    display: block;
+    margin: 0 0 1rem;
+    font-size: 0.88rem;
+    color: var(--bde-muted);
+}
+
+.bde-breadcrumb a {
+    color: #1f56aa;
+    text-decoration: none;
+}
+
+.bde-breadcrumb-sep {
+    opacity: 0.6;
+}
+
+.bde-inline-breadcrumb {
+    display: block;
+    width: 100%;
+    margin-bottom: 0.4rem;
+    font-size: 0.8rem;
+    color: var(--bde-muted);
+}
+
+.bde-inline-breadcrumb a {
+    color: #1f56aa;
+    text-decoration: none;
+}
+
+.bde-toc {
+    margin: 0 0 1.5rem;
+    padding: 1rem 1.1rem;
+    border-radius: 14px;
+    border: 1px solid var(--bde-border);
+    background: linear-gradient(140deg, #f7faff, #ffffff);
+}
+
+.bde-module-title {
+    margin: 0 0 0.7rem;
+    color: #153973;
+    font-size: 1.08rem;
+}
+
+.bde-toc ol {
+    margin: 0;
+    padding-left: 1.15rem;
+}
+
+.bde-toc-item {
+    margin-bottom: 0.45rem;
+}
+
+.bde-toc-item--h3 {
+    margin-left: 0.9rem;
+}
+
+.bde-toc a {
+    color: #1f56aa;
+    text-decoration: none;
+}
+
+.bde-cta {
+    margin: 1.3rem 0;
+    border-radius: 16px;
+    padding: 1.1rem 1rem;
+    background: linear-gradient(132deg, var(--bde-brand-a), var(--bde-brand-b));
+    color: #ffffff;
+    box-shadow: 0 14px 30px rgba(29, 72, 150, 0.2);
+}
+
+.bde-cta-kicker {
+    margin: 0;
+    opacity: 0.92;
+    font-size: 0.76rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.bde-cta-title {
+    margin: 0.35rem 0 0.45rem;
+    color: #ffffff;
+    font-size: 1.35rem;
+}
+
+.bde-cta-text {
+    margin: 0 0 0.75rem;
+    color: #ffffff;
+}
+
+.bde-cta-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    padding: 0.52rem 1rem;
+    background: #ffffff;
+    color: #153973;
+    text-decoration: none;
+    font-weight: 700;
+}
+
+/* Bottom modules: sharing and related content. */
+.bde-bottom-modules {
+    margin-top: 1rem;
+}
+
+.bde-share,
+.bde-related {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--bde-border);
+}
+
+.bde-share-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+}
+
+.bde-share-link {
+    border: 1px solid var(--bde-border);
+    border-radius: 999px;
+    padding: 0.35rem 0.8rem;
+    text-decoration: none;
+    color: #153973;
+    font-size: 0.88rem;
+}
+
+.bde-topic-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 0.7rem;
+}
+
+.bde-topic-tag {
+    display: inline-flex;
+    border-radius: 999px;
+    text-decoration: none;
+    padding: 0.28rem 0.62rem;
+    background: var(--bde-surface);
+    color: #1f56aa;
+    font-size: 0.84rem;
+    border: 1px solid var(--bde-border);
+}
+
+.bde-related-list {
+    margin: 0;
+    padding-left: 1rem;
+}
+
+.bde-related-list li {
+    margin-bottom: 0.45rem;
+}
+
+@media (max-width: 780px) {
+    body.archive .page-content {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    body.archive .page-header .entry-title {
+        font-size: clamp(2.05rem, 8.2vw, 2.75rem);
+    }
+
+    body.archive .archive-description {
+        font-size: 1.05rem;
+    }
+
+    body.archive .page-content article.post {
+        border-radius: 14px;
+    }
+
+    body.archive .page-content article.post > a {
+        aspect-ratio: 16 / 11;
+    }
+
+    body.archive .page-content article.post .entry-title {
+        padding-top: 0.8rem;
+    }
+
+    body.archive .page-content article.post .entry-title a {
+        font-size: 1.16rem;
+    }
+
+    body.archive .page-content article.post p {
+        font-size: 1rem;
+        margin-top: 0.3rem;
+    }
+
+    .bde-cta-title {
+        font-size: 1.2rem;
+    }
+
+    body.single-post .page-content > p,
+    body.single-post .page-content li {
+        font-size: 1rem;
+    }
+}

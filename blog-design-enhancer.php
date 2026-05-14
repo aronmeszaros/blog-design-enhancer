@@ -1,0 +1,35 @@
+<?php
+/**
+ * Plugin Name: Blog Design Enhancer
+ * Description: Improves blog/archive and single-post UX with excerpts, CTA modules, TOC, share tools, related posts, and custom CSS/JS.
+ * Version: 1.3.0
+ * Author: Your Name
+ * License: GPL-2.0-or-later
+ * Text Domain: blog-design-enhancer
+ * Update URI: https://github.com/your-owner/blog-design-enhancer
+ */
+
+if (!defined('ABSPATH')) {
+    exit;
+}
+
+// Plugin-wide constants used by all modular classes.
+define('BDE_VERSION', '1.3.0');
+define('BDE_PLUGIN_FILE', __FILE__);
+define('BDE_PLUGIN_PATH', plugin_dir_path(__FILE__));
+define('BDE_PLUGIN_URL', plugin_dir_url(__FILE__));
+define('BDE_GITHUB_REPOSITORY', 'your-owner/blog-design-enhancer');
+define('BDE_GITHUB_TOKEN', '');
+define('BDE_GITHUB_BRANCH', 'main');
+
+// Central class loader.
+require_once BDE_PLUGIN_PATH . 'includes/class-bde-plugin.php';
+
+// Public accessor for the singleton plugin instance.
+function bde_plugin(): BDE_Plugin
+{
+    return BDE_Plugin::instance();
+}
+
+// Boot plugin.
+bde_plugin();
