@@ -2,8 +2,8 @@
 /**
  * Plugin Name: Blog Design Enhancer
  * Description: Improves blog/archive and single-post UX with excerpts, CTA modules, TOC, share tools, related posts, and custom CSS/JS.
- * Version: 1.3.0
- * Author: Aron MEszaros
+ * Version: 1.4.0
+ * Author: Aron Meszaros
  * License: GPL-2.0-or-later
  * Text Domain: blog-design-enhancer
  * Update URI: https://github.com/aronmeszaros/blog-design-enhancer
