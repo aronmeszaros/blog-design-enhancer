@@ -13,6 +13,7 @@ class BDE_Updater
     private string $current_version;
     private string $api_url;
     private string $cache_key = 'bde_github_release_info';
+    private string $manual_check_notice_key = 'bde_update_checked';
 
     public function __construct()
     {
@@ -28,6 +29,65 @@ class BDE_Updater
 
         add_filter('site_transient_update_plugins', [$this, 'inject_update_information']);
         add_filter('plugins_api', [$this, 'provide_plugin_information'], 10, 3);
+        add_filter('plugin_action_links_' . $this->plugin_basename, [$this, 'add_check_updates_link']);
+        add_action('admin_post_bde_check_updates', [$this, 'handle_manual_check']);
+        add_action('admin_notices', [$this, 'render_manual_check_notice']);
+    }
+
+    public function add_check_updates_link(array $links): array
+    {
+        if (!current_user_can('update_plugins')) {
+            return $links;
+        }
+
+        $url = wp_nonce_url(
+            admin_url('admin-post.php?action=bde_check_updates'),
+            'bde_check_updates'
+        );
+
+        $links[] = '<a href="' . esc_url($url) . '">Check updates</a>';
+
+        return $links;
+    }
+
+    public function handle_manual_check(): void
+    {
+        if (!current_user_can('update_plugins')) {
+            wp_die('Insufficient permissions.');
+        }
+
+        check_admin_referer('bde_check_updates');
+
+        delete_transient($this->cache_key);
+        delete_site_transient('update_plugins');
+        wp_update_plugins();
+
+        $redirect = wp_get_referer();
+        if (!is_string($redirect) || $redirect === '') {
+            $redirect = admin_url('plugins.php');
+        }
+
+        $redirect = add_query_arg($this->manual_check_notice_key, '1', $redirect);
+        wp_safe_redirect($redirect);
+        exit;
+    }
+
+    public function render_manual_check_notice(): void
+    {
+        if (!is_admin()) {
+            return;
+        }
+
+        $screen = function_exists('get_current_screen') ? get_current_screen() : null;
+        if ($screen === null || $screen->id !== 'plugins') {
+            return;
+        }
+
+        if (empty($_GET[$this->manual_check_notice_key])) {
+            return;
+        }
+
+        echo '<div class="notice notice-success is-dismissible"><p>Plugin update check completed.</p></div>';
     }
 
     public function inject_update_information($transient)
